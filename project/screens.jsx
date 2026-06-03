@@ -307,7 +307,11 @@ function SectionLabel({ children }) {
 // Standard scrollable screen body (under the header, above tab bar).
 function ScreenScroll({ children }) {
   return (
-    <div className="noscroll" style={{ position: "absolute", inset: 0, overflowY: "auto", paddingTop: 64, paddingBottom: 120 }}>
+    <div className="noscroll" style={{
+      position: "absolute", inset: 0, overflowY: "auto",
+      paddingTop: "calc(64px + var(--safe-top))",
+      paddingBottom: "calc(120px + var(--safe-bottom))",
+    }}>
       {children}
     </div>
   );
@@ -343,7 +347,7 @@ function LessonFeed({ subtopicId, cardStyle, onClose, onProgress }) {
   return (
     <div style={{ position: "absolute", inset: 0, background: "var(--bg)", zIndex: 40 }}>
       {/* top chrome: story segments + title + close */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 3, padding: "52px 16px 10px", background: "linear-gradient(180deg, var(--bg) 35%, rgba(19,18,23,0.6) 80%, transparent)" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 3, padding: "calc(52px + var(--safe-top)) 16px 10px", background: "linear-gradient(180deg, var(--bg) 35%, rgba(19,18,23,0.6) 80%, transparent)" }}>
         <div style={{ display: "flex", gap: 4, marginBottom: 12 }}>
           {st.cards.map((_, i) => (
             <div key={i} style={{ flex: 1, height: 2.5, borderRadius: 999, background: "var(--line-strong)", overflow: "hidden" }}>

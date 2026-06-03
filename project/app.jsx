@@ -29,12 +29,27 @@ function loadProgress() {
   try { return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {}; } catch (e) { return {}; }
 }
 
+function isNative() {
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true ||
+    window.innerWidth <= 480
+  );
+}
+
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [tab, setTab] = React.useState("today");
   const [lesson, setLesson] = React.useState(null); // subtopicId or null
   const [progress, setProgress] = React.useState(loadProgress);
+  const [native, setNative] = React.useState(isNative);
   const streak = 4;
+
+  React.useEffect(() => {
+    const handler = () => { setNative(isNative()); fitDevice(); };
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
 
   // persist progress (max frac wins)
   function bumpProgress(id, frac) {
@@ -65,7 +80,11 @@ function App() {
     "--radius": t.radius + "px",
   };
 
-  const cls = [t.showFurigana ? "" : "furi-off", t.showRomaji ? "" : "romaji-off"].join(" ");
+  const cls = [
+    native ? "native" : "",
+    t.showFurigana ? "" : "furi-off",
+    t.showRomaji ? "" : "romaji-off",
+  ].filter(Boolean).join(" ");
 
   function openLesson(id) { setLesson(id); }
   function closeLesson() { setLesson(null); setTab("library"); }
@@ -80,7 +99,7 @@ function App() {
       </div>
 
       {/* bottom tab bar */}
-      <TabBar tab={tab} setTab={setTab} />
+      <TabBar tab={tab} setTab={setTab} native={native} />
 
       {/* immersive lesson overlay */}
       {lesson && (
@@ -108,7 +127,7 @@ function App() {
   );
 }
 
-function TabBar({ tab, setTab }) {
+function TabBar({ tab, setTab, native }) {
   const tabs = [
     { id: "today", label: "Today", icon: "today" },
     { id: "library", label: "Library", icon: "library" },
@@ -118,7 +137,7 @@ function TabBar({ tab, setTab }) {
     <div
       style={{
         position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 20,
-        paddingBottom: 26, paddingTop: 14,
+        paddingBottom: native ? "calc(26px + var(--safe-bottom))" : 26, paddingTop: 14,
         display: "flex", justifyContent: "space-around", alignItems: "center",
         background: "var(--bg)",
         borderTop: "1px solid var(--line)",
@@ -150,6 +169,10 @@ function TabBar({ tab, setTab }) {
 function fitDevice() {
   const scaler = document.getElementById("scaler");
   if (!scaler) return;
+  if (isNative()) {
+    scaler.style.transform = "none";
+    return;
+  }
   const W = 402, H = 874, margin = 24;
   const s = Math.min((window.innerWidth - margin) / W, (window.innerHeight - margin) / H, 1);
   scaler.style.transform = `scale(${s})`;
@@ -157,7 +180,17 @@ function fitDevice() {
 window.addEventListener("resize", fitDevice);
 
 function Root() {
-  React.useEffect(() => { fitDevice(); }, []);
+  const [native, setNative] = React.useState(isNative);
+  React.useEffect(() => {
+    fitDevice();
+    const handler = () => setNative(isNative());
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  if (native) {
+    return <App />;
+  }
   return (
     <IOSDevice dark>
       <App />

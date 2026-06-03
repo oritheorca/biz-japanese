@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="96" fill="#131217"/>
-  <text x="256" y="248"
+  <text x="256" y="236"
     font-family="Noto Sans JP, Hiragino Sans, sans-serif"
     font-size="110"
     font-weight="700"
     fill="#e8a13a"
     text-anchor="middle"
     letter-spacing="1">ビジネス</text>
-  <text x="256" y="348"
+  <text x="256" y="364"
     font-family="Noto Sans JP, Hiragino Sans, sans-serif"
     font-size="88"
     font-weight="500"

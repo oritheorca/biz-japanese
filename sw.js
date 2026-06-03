@@ -1,4 +1,4 @@
-const CACHE = 'keigo-v1';
+const CACHE = 'keigo-v3';
 
 const LOCAL_ASSETS = [
   './',

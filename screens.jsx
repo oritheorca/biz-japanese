@@ -16,12 +16,12 @@ function Bar({ value, height = 3 }) {
 }
 
 // Segmented bar — one chunk per card
-function SegmentBar({ value, count, height = 3 }) {
+function SegmentBar({ value, count, height = 3.5 }) {
   const filled = Math.round(value * count);
   return (
-    <div style={{ display: "flex", gap: 3 }}>
+    <div style={{ display: "flex", gap: 4 }}>
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} style={{ flex: 1, height, borderRadius: 999, background: i < filled ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
+        <div key={i} style={{ flex: 1, height, borderRadius: 999, background: i < filled ? "var(--accent)" : "rgba(240,237,230,0.25)", transition: "background 0.3s ease" }} />
       ))}
     </div>
   );
@@ -181,7 +181,7 @@ function LibraryScreen({ progress, onOpen }) {
                 {live && (
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
                     <div style={{ flex: 1 }}><Bar value={moduleProgress(m)} /></div>
-                    <span style={{ fontFamily: "var(--font-ui)", fontSize: 11, fontWeight: 600, color: "var(--ink-3)" }}>{m.subtopics.length} subtopics</span>
+                    <span style={{ fontFamily: "var(--font-ui)", fontSize: 11, fontWeight: 600, color: "var(--ink-3)" }}>{m.subtopics.length} topics</span>
                   </div>
                 )}
               </button>

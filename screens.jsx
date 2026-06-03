@@ -15,6 +15,18 @@ function Bar({ value, height = 3 }) {
   );
 }
 
+// Segmented bar — one chunk per card
+function SegmentBar({ value, count, height = 3 }) {
+  const filled = Math.round(value * count);
+  return (
+    <div style={{ display: "flex", gap: 3 }}>
+      {Array.from({ length: count }, (_, i) => (
+        <div key={i} style={{ flex: 1, height, borderRadius: 999, background: i < filled ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
+      ))}
+    </div>
+  );
+}
+
 // ── Shared subtopic row ─────────────────────────────────────
 function SubtopicRow({ id, progress, onOpen, last }) {
   const st = C.subtopics[id];
@@ -35,7 +47,7 @@ function SubtopicRow({ id, progress, onOpen, last }) {
           <JP text={st.jp} style={{ fontSize: 13.5, color: "var(--ink-2)", whiteSpace: "nowrap" }} />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ flex: 1 }}><Bar value={p} /></div>
+          <div style={{ flex: 1 }}><SegmentBar value={p} count={st.cards.length} /></div>
           <span style={{ fontFamily: "var(--font-ui)", fontSize: 11, color: "var(--ink-3)", fontWeight: 600, minWidth: 30, textAlign: "right" }}>
             {p > 0 ? pct(p) + "%" : st.cards.length + " cards"}
           </span>

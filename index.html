@@ -44,6 +44,8 @@
     font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow: hidden;
+    overscroll-behavior: none;
   }
 
   /* Device centering / scaling */
@@ -86,14 +88,21 @@
   }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  /* Safe area variables — zero on desktop, real values on phone via .native class */
+  /* Padding variables — desktop uses fixed px to clear the fake iOS frame,
+     native uses actual safe-area insets so nothing is double-counted */
   :root {
     --safe-top: 0px;
     --safe-bottom: 0px;
+    --pad-top: 64px;               /* clears fake status bar inside IOSDevice */
+    --pad-bottom-tab: 26px;        /* tab bar bottom padding */
+    --lesson-pad-top: 52px;        /* lesson chrome top padding */
   }
   .native {
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --pad-top: calc(env(safe-area-inset-top, 0px) + 16px);
+    --pad-bottom-tab: max(10px, env(safe-area-inset-bottom, 0px));
+    --lesson-pad-top: calc(env(safe-area-inset-top, 0px) + 8px);
   }
 
   /* On mobile or when installed as PWA: fill the viewport, no device frame */

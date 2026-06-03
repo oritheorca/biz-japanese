@@ -1,25 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="96" fill="#131217"/>
-  <rect x="80" y="80" width="352" height="352" rx="60" fill="#1f1e27"/>
-  <!-- Amber accent bar top -->
-  <rect x="80" y="80" width="352" height="6" rx="3" fill="#e8a13a"/>
-  <!-- 敬 character region: central amber circle -->
-  <circle cx="256" cy="240" r="92" fill="#e8a13a" opacity="0.12"/>
-  <!-- Stylised 敬 strokes (simplified kanji-like marks) -->
-  <!-- Horizontal top stroke -->
-  <rect x="176" y="168" width="160" height="12" rx="6" fill="#e8a13a"/>
-  <!-- Left vertical -->
-  <rect x="192" y="168" width="12" height="96" rx="6" fill="#e8a13a"/>
-  <!-- Right vertical -->
-  <rect x="308" y="168" width="12" height="96" rx="6" fill="#e8a13a"/>
-  <!-- Middle horizontal -->
-  <rect x="192" y="218" width="128" height="10" rx="5" fill="#e8a13a"/>
-  <!-- Lower left -->
-  <rect x="176" y="288" width="72" height="10" rx="5" fill="#e8a13a"/>
-  <rect x="192" y="288" width="10" height="64" rx="5" fill="#e8a13a"/>
-  <!-- Lower right -->
-  <rect x="264" y="288" width="72" height="10" rx="5" fill="#e8a13a"/>
-  <rect x="320" y="288" width="10" height="64" rx="5" fill="#e8a13a"/>
-  <!-- Bottom label -->
-  <rect x="136" y="400" width="240" height="3" rx="1.5" fill="#e8a13a" opacity="0.4"/>
+  <text x="256" y="248"
+    font-family="Noto Sans JP, Hiragino Sans, sans-serif"
+    font-size="110"
+    font-weight="700"
+    fill="#e8a13a"
+    text-anchor="middle"
+    letter-spacing="1">ビジネス</text>
+  <text x="256" y="348"
+    font-family="Noto Sans JP, Hiragino Sans, sans-serif"
+    font-size="88"
+    font-weight="500"
+    fill="#efece4"
+    opacity="0.7"
+    text-anchor="middle"
+    letter-spacing="0">日本語</text>
 </svg>

@@ -16,7 +16,7 @@ function Bar({ value, height = 3 }) {
 }
 
 // Segmented bar — one chunk per card
-function SegmentBar({ value, count, height = 3.5 }) {
+function SegmentBar({ value, count, height = 2.5 }) {
   const filled = Math.round(value * count);
   return (
     <div style={{ display: "flex", gap: 2 }}>
@@ -362,7 +362,7 @@ function LessonFeed({ subtopicId, cardStyle, onClose, onProgress }) {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 3, padding: "calc(52px + var(--safe-top)) 16px 10px", background: "linear-gradient(180deg, var(--bg) 35%, rgba(19,18,23,0.6) 80%, transparent)" }}>
         <div style={{ display: "flex", gap: 2, marginBottom: 12 }}>
           {st.cards.map((_, i) => (
-            <div key={i} style={{ flex: 1, height: 3, borderRadius: 999, background: i <= active ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
+            <div key={i} style={{ flex: 1, height: 2, borderRadius: 999, background: i <= active ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

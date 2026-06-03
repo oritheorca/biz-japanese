@@ -348,11 +348,9 @@ function LessonFeed({ subtopicId, cardStyle, onClose, onProgress }) {
     <div style={{ position: "absolute", inset: 0, background: "var(--bg)", zIndex: 40 }}>
       {/* top chrome: story segments + title + close */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 3, padding: "calc(52px + var(--safe-top)) 16px 10px", background: "linear-gradient(180deg, var(--bg) 35%, rgba(19,18,23,0.6) 80%, transparent)" }}>
-        <div style={{ display: "flex", gap: 4, marginBottom: 12 }}>
+        <div style={{ display: "flex", gap: 3, marginBottom: 12 }}>
           {st.cards.map((_, i) => (
-            <div key={i} style={{ flex: 1, height: 2.5, borderRadius: 999, background: "var(--line-strong)", overflow: "hidden" }}>
-              <div style={{ height: "100%", background: "var(--accent)", width: i < active ? "100%" : i === active ? "100%" : "0%", opacity: i <= active ? 1 : 0, transition: "width 0.3s ease" }} />
-            </div>
+            <div key={i} style={{ flex: 1, height: 3, borderRadius: 999, background: i <= active ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

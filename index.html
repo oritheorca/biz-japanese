@@ -118,6 +118,10 @@
 
   /* On mobile or when installed as PWA: fill the viewport, no device frame */
   @media (display-mode: standalone), (max-width: 480px) {
+    /* Paint everything dark so the home-indicator safe area never shows white */
+    html, body, #stage, #scaler, #root {
+      background: var(--bg, #131217) !important;
+    }
     #stage { align-items: stretch; justify-content: stretch; overflow: hidden; touch-action: pan-y; }
     #scaler { width: 100% !important; height: 100% !important; transform: none !important; overflow-x: hidden; }
     #root  { width: 100%; height: 100%; overflow-x: hidden; }

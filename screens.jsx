@@ -19,7 +19,7 @@ function Bar({ value, height = 3 }) {
 function SegmentBar({ value, count, height = 3.5 }) {
   const filled = Math.round(value * count);
   return (
-    <div style={{ display: "flex", gap: 4 }}>
+    <div style={{ display: "flex", gap: 2 }}>
       {Array.from({ length: count }, (_, i) => (
         <div key={i} style={{ flex: 1, height, borderRadius: 999, background: i < filled ? "var(--accent)" : "rgba(240,237,230,0.25)", transition: "background 0.3s ease" }} />
       ))}
@@ -360,7 +360,7 @@ function LessonFeed({ subtopicId, cardStyle, onClose, onProgress }) {
     <div style={{ position: "absolute", inset: 0, background: "var(--bg)", zIndex: 40 }}>
       {/* top chrome: story segments + title + close */}
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 3, padding: "calc(52px + var(--safe-top)) 16px 10px", background: "linear-gradient(180deg, var(--bg) 35%, rgba(19,18,23,0.6) 80%, transparent)" }}>
-        <div style={{ display: "flex", gap: 3, marginBottom: 12 }}>
+        <div style={{ display: "flex", gap: 2, marginBottom: 12 }}>
           {st.cards.map((_, i) => (
             <div key={i} style={{ flex: 1, height: 3, borderRadius: 999, background: i <= active ? "var(--accent)" : "rgba(240,237,230,0.18)", transition: "background 0.3s ease" }} />
           ))}

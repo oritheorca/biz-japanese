@@ -136,7 +136,7 @@ function TabBar({ tab, setTab, native }) {
   return (
     <div
       style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 20,
+        position: native ? "fixed" : "absolute", bottom: 0, left: 0, right: 0, zIndex: 20,
         paddingBottom: "var(--pad-bottom-tab)", paddingTop: 14,
         display: "flex", justifyContent: "space-around", alignItems: "center",
         background: "var(--bg)",

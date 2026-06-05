@@ -122,9 +122,20 @@
     html, body, #stage, #scaler, #root {
       background: var(--bg, #131217) !important;
     }
-    #stage { align-items: stretch; justify-content: stretch; overflow: hidden; touch-action: pan-y; }
-    #scaler { width: 100% !important; height: 100% !important; transform: none !important; overflow-x: hidden; }
-    #root  { width: 100%; height: 100%; overflow-x: hidden; }
+    /* Use dynamic viewport height so the full screen is filled on mobile */
+    #stage {
+      align-items: stretch; justify-content: stretch; overflow: hidden;
+      touch-action: pan-y;
+      height: 100vh; height: 100dvh;
+    }
+    #scaler {
+      width: 100% !important; transform: none !important; overflow-x: hidden;
+      height: 100vh !important; height: 100dvh !important;
+    }
+    #root {
+      width: 100%; overflow-x: hidden;
+      height: 100vh; height: 100dvh;
+    }
   }
 </style>
 </head>

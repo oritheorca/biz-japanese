@@ -1,4 +1,4 @@
-const CACHE = 'keigo-v8';
+const CACHE = 'keigo-v9';
 
 const LOCAL_ASSETS = [
   './',
@@ -40,12 +40,27 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  const isCacheable =
-    url.origin === self.location.origin ||
-    CDN_HOSTS.some((h) => url.hostname.includes(h));
+  const sameOrigin = url.origin === self.location.origin;
+  const isCDN = CDN_HOSTS.some((h) => url.hostname.includes(h));
 
-  if (!isCacheable) return;
+  if (!sameOrigin && !isCDN) return;
 
+  if (sameOrigin) {
+    // Network-first for our own app code so updates apply on reload.
+    // Falls back to cache when offline.
+    e.respondWith(
+      fetch(e.request).then((res) => {
+        if (res && res.status === 200 && res.type !== 'opaque') {
+          const clone = res.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Cache-first for stable, versioned CDN assets (React, Babel, fonts).
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;

@@ -7,9 +7,9 @@
     fill="#e8a13a"
     text-anchor="middle"
     letter-spacing="1">ビジネス</text>
-  <text x="256" y="364"
-    font-family="Noto Sans JP, Hiragino Sans, sans-serif"
-    font-size="88"
+  <text x="256" y="368"
+    font-family="Noto Serif JP, Hiragino Mincho ProN, serif"
+    font-size="92"
     font-weight="500"
     fill="#efece4"
     opacity="0.7"

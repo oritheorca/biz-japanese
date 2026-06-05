@@ -122,19 +122,21 @@
     html, body, #stage, #scaler, #root {
       background: var(--bg, #131217) !important;
     }
-    /* Use dynamic viewport height so the full screen is filled on mobile */
+    /* Height is driven by JS (--app-height = window.innerHeight) for exact
+       fit under Safari's bottom URL bar; 100dvh is the fallback. */
     #stage {
       align-items: stretch; justify-content: stretch; overflow: hidden;
       touch-action: pan-y;
-      height: 100vh; height: 100dvh;
+      top: 0; bottom: auto;
+      height: 100dvh; height: var(--app-height, 100dvh);
     }
     #scaler {
       width: 100% !important; transform: none !important; overflow-x: hidden;
-      height: 100vh !important; height: 100dvh !important;
+      height: 100dvh !important; height: var(--app-height, 100dvh) !important;
     }
     #root {
       width: 100%; overflow-x: hidden;
-      height: 100vh; height: 100dvh;
+      height: 100dvh; height: var(--app-height, 100dvh);
     }
   }
 </style>
@@ -152,6 +154,21 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
+  <script>
+    // Drive layout height from the true visible viewport so the tab bar sits
+    // flush at the bottom even with Safari's dynamic bottom URL bar.
+    (function () {
+      function setAppHeight() {
+        document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
+      }
+      setAppHeight();
+      window.addEventListener('resize', setAppHeight);
+      window.addEventListener('orientationchange', setAppHeight);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', setAppHeight);
+      }
+    })();
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       // Reload once when a new service worker takes control, so code

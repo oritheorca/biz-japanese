@@ -90,7 +90,7 @@ function App() {
   function closeLesson() { setLesson(null); setTab("library"); }
 
   return (
-    <div className={cls} style={{ ...appVars, position: "relative", height: "100%", width: "100%", background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <div className={cls} style={{ ...appVars, position: "relative", height: native ? "var(--app-height, 100dvh)" : "100%", width: "100%", background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* active screen — fills all space above the tab bar */}
       <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
         {tab === "today" && <TodayScreen progress={progress} onOpen={openLesson} streak={streak} />}

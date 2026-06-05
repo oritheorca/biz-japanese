@@ -89,8 +89,15 @@ function App() {
   function openLesson(id) { setLesson(id); }
   function closeLesson() { setLesson(null); setTab("library"); }
 
+  // In native/PWA mode, pin the App with position:fixed inset:0 — the one
+  // method that reliably fills the entire screen edge-to-edge (same as the
+  // dark #stage). A height/dvh/innerHeight chain comes up short in standalone
+  // and leaves a dark gap below the tab bar.
+  const shellStyle = native
+    ? { position: "fixed", inset: 0 }
+    : { position: "relative", height: "100%", width: "100%" };
   return (
-    <div className={cls} style={{ ...appVars, position: "relative", height: native ? "var(--app-height, 100dvh)" : "100%", width: "100%", background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <div className={cls} style={{ ...appVars, ...shellStyle, background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* active screen — fills all space above the tab bar */}
       <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
         {tab === "today" && <TodayScreen progress={progress} onOpen={openLesson} streak={streak} />}

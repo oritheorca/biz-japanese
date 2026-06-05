@@ -248,10 +248,53 @@ function YouScreen({ progress, streak, onReset }) {
 
       <div style={{ padding: "22px 24px 0", textAlign: "center" }}>
         <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, color: "var(--ink-3)", letterSpacing: "0.04em" }}>
-          Biz Japanese · build v13
+          Biz Japanese · build v14
         </span>
+        <Diagnostics />
       </div>
     </ScreenScroll>
+  );
+}
+
+// Temporary on-screen measurements to diagnose the bottom-gap issue.
+function Diagnostics() {
+  const probeRef = React.useRef(null);
+  const [d, setD] = React.useState(null);
+  React.useEffect(() => {
+    function measure() {
+      const sab = probeRef.current ? probeRef.current.getBoundingClientRect().height : -1;
+      const shell = document.querySelector('[data-app-shell]');
+      const shellH = shell ? Math.round(shell.getBoundingClientRect().height) : -1;
+      const tabbar = document.querySelector('[data-tabbar]');
+      const tabRect = tabbar ? tabbar.getBoundingClientRect() : null;
+      setD({
+        inner: window.innerHeight,
+        client: document.documentElement.clientHeight,
+        screen: window.screen ? window.screen.height : -1,
+        vv: window.visualViewport ? Math.round(window.visualViewport.height) : -1,
+        sab: Math.round(sab),
+        standalone: window.matchMedia('(display-mode: standalone)').matches ? 'Y' : 'N',
+        shellH,
+        tabBottom: tabRect ? Math.round(tabRect.bottom) : -1,
+      });
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    const id = setInterval(measure, 1000);
+    return () => { window.removeEventListener('resize', measure); clearInterval(id); };
+  }, []);
+  return (
+    <div style={{ marginTop: 10, fontFamily: "monospace", fontSize: 10, color: "var(--ink-3)", lineHeight: 1.6 }}>
+      {/* invisible probe whose height equals the bottom safe-area inset */}
+      <div ref={probeRef} style={{ height: "env(safe-area-inset-bottom, 0px)", width: 0 }} />
+      {d ? (
+        <div>
+          inner={d.inner} client={d.client} vv={d.vv} screen={d.screen}<br />
+          safeBottom={d.sab} standalone={d.standalone}<br />
+          shellH={d.shellH} tabBottom={d.tabBottom}
+        </div>
+      ) : "measuring…"}
+    </div>
   );
 }
 

@@ -97,7 +97,7 @@ function App() {
     ? { position: "fixed", inset: 0 }
     : { position: "relative", height: "100%", width: "100%" };
   return (
-    <div className={cls} style={{ ...appVars, ...shellStyle, background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+    <div data-app-shell className={cls} style={{ ...appVars, ...shellStyle, background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* active screen — fills all space above the tab bar */}
       <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
         {tab === "today" && <TodayScreen progress={progress} onOpen={openLesson} streak={streak} />}
@@ -142,6 +142,7 @@ function TabBar({ tab, setTab }) {
   ];
   return (
     <div
+      data-tabbar
       style={{
         flexShrink: 0, zIndex: 20,
         paddingBottom: "var(--pad-bottom-tab)", paddingTop: 14,

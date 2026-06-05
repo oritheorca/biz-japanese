@@ -90,16 +90,16 @@ function App() {
   function closeLesson() { setLesson(null); setTab("library"); }
 
   return (
-    <div className={cls} style={{ ...appVars, position: "relative", height: "100%", width: "100%", background: "var(--bg)", overflow: "hidden" }}>
-      {/* active screen */}
-      <div style={{ position: "absolute", inset: 0 }}>
+    <div className={cls} style={{ ...appVars, position: "relative", height: "100%", width: "100%", background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      {/* active screen — fills all space above the tab bar */}
+      <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
         {tab === "today" && <TodayScreen progress={progress} onOpen={openLesson} streak={streak} />}
         {tab === "library" && <LibraryScreen progress={progress} onOpen={openLesson} />}
         {tab === "you" && <YouScreen progress={progress} streak={streak} onReset={resetProgress} />}
       </div>
 
-      {/* bottom tab bar */}
-      <TabBar tab={tab} setTab={setTab} native={native} />
+      {/* bottom tab bar — normal flow, sits at the column's bottom */}
+      <TabBar tab={tab} setTab={setTab} />
 
       {/* immersive lesson overlay */}
       {lesson && (
@@ -127,7 +127,7 @@ function App() {
   );
 }
 
-function TabBar({ tab, setTab, native }) {
+function TabBar({ tab, setTab }) {
   const tabs = [
     { id: "today", label: "Today", icon: "today" },
     { id: "library", label: "Library", icon: "library" },
@@ -136,7 +136,7 @@ function TabBar({ tab, setTab, native }) {
   return (
     <div
       style={{
-        position: native ? "fixed" : "absolute", bottom: 0, left: 0, right: 0, zIndex: 20,
+        flexShrink: 0, zIndex: 20,
         paddingBottom: "var(--pad-bottom-tab)", paddingTop: 14,
         display: "flex", justifyContent: "space-around", alignItems: "center",
         background: "var(--bg)",

@@ -322,7 +322,7 @@ function ScreenScroll({ children }) {
     <div className="noscroll" style={{
       position: "absolute", inset: 0, overflowY: "auto",
       paddingTop: "var(--pad-top)",
-      paddingBottom: "calc(120px + var(--safe-bottom))",
+      paddingBottom: 28,
     }}>
       {children}
     </div>

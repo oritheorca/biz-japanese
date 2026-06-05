@@ -110,31 +110,39 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --pad-top: calc(env(safe-area-inset-top, 0px) + 16px);
-    --pad-bottom-tab: max(8px, env(safe-area-inset-bottom, 0px));
+    --pad-bottom-tab: max(10px, calc(env(safe-area-inset-bottom, 0px) - 10px));
     --lesson-pad-top: calc(env(safe-area-inset-top, 0px) + 8px);
   }
 
-  /* On mobile or when installed as PWA: fill the viewport, no device frame */
+  /* On mobile or when installed as PWA: fill the viewport, no device frame.
+     --shell-h defaults to 100vh (correct for installed PWA, reliable from
+     cold start) and is overridden to 100dvh in a mobile browser below so the
+     content sits above Safari's dynamic bottom URL bar. */
   @media (display-mode: standalone), (max-width: 480px) {
+    html { --shell-h: 100vh; }
     /* Paint everything dark so the home-indicator safe area never shows white */
     html, body, #stage, #scaler, #root {
       background: var(--bg, #131217) !important;
     }
-    /* 100vh fills the full screen (incl. under the home indicator) and is
-       reliable from a PWA cold start, unlike 100dvh/innerHeight. */
     #stage {
       align-items: stretch; justify-content: stretch; overflow: hidden;
       touch-action: pan-y;
-      height: 100vh;
+      height: var(--shell-h, 100vh);
     }
     #scaler {
       width: 100% !important; transform: none !important; overflow-x: hidden;
-      height: 100vh !important;
+      height: var(--shell-h, 100vh) !important;
     }
     #root {
       width: 100%; overflow-x: hidden;
-      height: 100vh;
+      height: var(--shell-h, 100vh);
     }
+  }
+  /* Mobile browser (not installed): dvh tracks the dynamic URL bar so the
+     tab bar isn't cut off behind it. dvh's cold-start bug only affects
+     installed PWAs, so it's safe here. */
+  @media (display-mode: browser) and (max-width: 480px) {
+    html { --shell-h: 100dvh; }
   }
 </style>
 </head>

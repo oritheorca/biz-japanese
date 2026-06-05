@@ -89,11 +89,10 @@ function App() {
   function openLesson(id) { setLesson(id); }
   function closeLesson() { setLesson(null); setTab("library"); }
 
-  // 100vh fills the full screen and is reliable from a PWA cold start (100%,
-  // 100dvh and innerHeight all come up short on iOS standalone). The flex
-  // column then puts the tab bar on the true bottom; its safe-area padding
-  // keeps the labels above the home indicator while its background fills down.
-  const shellStyle = { position: "relative", height: native ? "100vh" : "100%", width: "100%" };
+  // Height comes from --shell-h (100vh installed / 100dvh in a mobile browser)
+  // so the tab bar lands on the true bottom in both contexts. 100% on desktop
+  // (inside the device frame).
+  const shellStyle = { position: "relative", height: native ? "var(--shell-h, 100vh)" : "100%", width: "100%" };
   return (
     <div data-app-shell className={cls} style={{ ...appVars, ...shellStyle, background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* active screen — fills all space above the tab bar */}

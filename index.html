@@ -45,12 +45,10 @@
     text-rendering: optimizeLegibility;
     overflow: hidden;
     overscroll-behavior: none;
-  }
-  /* Pin the page so the webview can't pan/rubber-band horizontally (iOS PWA) */
-  html, body {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%; height: 100%;
+    /* 100vh is the ONLY height that's correct from a PWA cold start —
+       100% and 100dvh report short/uninitialized values on iOS. No
+       position:fixed on root (it confines content to the safe area). */
+    height: 100vh;
     touch-action: pan-y;
   }
 
@@ -112,7 +110,7 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --pad-top: calc(env(safe-area-inset-top, 0px) + 16px);
-    --pad-bottom-tab: max(8px, calc(env(safe-area-inset-bottom, 0px) - 14px));
+    --pad-bottom-tab: max(8px, env(safe-area-inset-bottom, 0px));
     --lesson-pad-top: calc(env(safe-area-inset-top, 0px) + 8px);
   }
 
@@ -122,21 +120,20 @@
     html, body, #stage, #scaler, #root {
       background: var(--bg, #131217) !important;
     }
-    /* Height is driven by JS (--app-height = window.innerHeight) for exact
-       fit under Safari's bottom URL bar; 100dvh is the fallback. */
+    /* 100vh fills the full screen (incl. under the home indicator) and is
+       reliable from a PWA cold start, unlike 100dvh/innerHeight. */
     #stage {
       align-items: stretch; justify-content: stretch; overflow: hidden;
       touch-action: pan-y;
-      top: 0; bottom: auto;
-      height: 100dvh; height: var(--app-height, 100dvh);
+      height: 100vh;
     }
     #scaler {
       width: 100% !important; transform: none !important; overflow-x: hidden;
-      height: 100dvh !important; height: var(--app-height, 100dvh) !important;
+      height: 100vh !important;
     }
     #root {
       width: 100%; overflow-x: hidden;
-      height: 100dvh; height: var(--app-height, 100dvh);
+      height: 100vh;
     }
   }
 </style>

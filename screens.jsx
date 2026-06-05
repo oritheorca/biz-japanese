@@ -248,7 +248,7 @@ function YouScreen({ progress, streak, onReset }) {
 
       <div style={{ padding: "22px 24px 0", textAlign: "center" }}>
         <span style={{ fontFamily: "var(--font-ui)", fontSize: 10.5, color: "var(--ink-3)", letterSpacing: "0.04em" }}>
-          Biz Japanese · build v14
+          Biz Japanese · build v15
         </span>
         <Diagnostics />
       </div>

@@ -89,13 +89,11 @@ function App() {
   function openLesson(id) { setLesson(id); }
   function closeLesson() { setLesson(null); setTab("library"); }
 
-  // In native/PWA mode, pin the App with position:fixed inset:0 — the one
-  // method that reliably fills the entire screen edge-to-edge (same as the
-  // dark #stage). A height/dvh/innerHeight chain comes up short in standalone
-  // and leaves a dark gap below the tab bar.
-  const shellStyle = native
-    ? { position: "fixed", inset: 0 }
-    : { position: "relative", height: "100%", width: "100%" };
+  // 100vh fills the full screen and is reliable from a PWA cold start (100%,
+  // 100dvh and innerHeight all come up short on iOS standalone). The flex
+  // column then puts the tab bar on the true bottom; its safe-area padding
+  // keeps the labels above the home indicator while its background fills down.
+  const shellStyle = { position: "relative", height: native ? "100vh" : "100%", width: "100%" };
   return (
     <div data-app-shell className={cls} style={{ ...appVars, ...shellStyle, background: "var(--bg)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* active screen — fills all space above the tab bar */}
